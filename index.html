@@ -43,8 +43,7 @@ const V={E:[220,36],S:[42,326],D:[398,326]}; // Equality, Environmental sustaina
 const scenarios=["present","future"], state={present:{point:null,submitted:false,rows:[]},future:{point:null,submitted:false,rows:[]}};
 const $=id=>document.getElementById(id);
 function baryToXY(p){return [p.e*V.E[0]+p.s*V.S[0]+p.d*V.D[0],p.e*V.E[1]+p.s*V.S[1]+p.d*V.D[1]]}
-function xyToBary(x,y){let [x1,y1]=V.E,[x2,y2]=V.S,[x3,y3]=V.D];let den=(y2-y3)*(x1-x3)+(x3-x2)*(y1-y3);let e=((y2-y3)*(x-x3)+(x3-x2)*(y-y3))/den;let s=((y3-y1)*(x-x3)+(x1-x3)*(y-y3))/den;let d=1-e-s;let a=[e,s,d].map(v=>Math.max(0,v));let sum=a.reduce((x,y)=>x+y,0);return {e:a[0]/sum,s:a[1]/sum,d:a[2]/sum}}
-function inside(p){return p.e>=0&&p.s>=0&&p.d>=0}
+function xyToBary(x,y){let [x1,y1]=V.E,[x2,y2]=V.S,[x3,y3]=V.D;let den=(y2-y3)*(x1-x3)+(x3-x2)*(y1-y3);let e=((y2-y3)*(x-x3)+(x3-x2)*(y-y3))/den;let s=((y3-y1)*(x-x3)+(x1-x3)*(y-y3))/den;let d=1-e-s;let a=[e,s,d].map(v=>Math.max(0,v));let sum=a.reduce((x,y)=>x+y,0);return {e:a[0]/sum,s:a[1]/sum,d:a[2]/sum}}
 function svgEl(tag,attrs={},text){const el=document.createElementNS("http://www.w3.org/2000/svg",tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));if(text!==undefined)el.textContent=text;return el}
 function draw(key){const svg=$("plot-"+key);svg.innerHTML="";const points=[V.E,V.S,V.D];svg.append(svgEl("polygon",{points:points.map(p=>p.join(",")).join(" "),class:"outline"}));
 for(let t=1;t<10;t++){let f=t/10; // parallel grid lines
